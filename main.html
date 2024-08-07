@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Веб приложение для Телеграм бота</title>
+    <style>
+        @font-face {
+            font-family: 'HomeVideo';
+            src: url('Intro.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Rostov';
+            src: url('rostov.ttf') format('truetype');
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333333;
+            background-size: cover;
+            background-position: center center;
+            margin: 0;
+            font-family: 'HomeVideo', Arial, sans-serif;
+            position: relative; /* Добавляем relative для позиционирования элементов внутри */
+        }
+
+        .banner {
+            width: 385px;
+            height: 50px;
+            background-color: #2a2a2a;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            padding-left: 10px; /* Отступ слева */
+            border-radius: 15px; /* Закругленные углы */
+        }
+
+        .banner img {
+            height: 40px; /* Высота изображения, чтобы оно поместилось в баннер */
+            width: auto;
+            border-radius: 50%; /* Закругление изображения */
+            margin-right: 23px; /* Отступ справа от изображения */
+        }
+
+        .banner-text {
+            font-family: 'Rostov', Arial, sans-serif;
+            color: #ffffff; /* Цвет текста */
+            font-size: 35px; /* Размер шрифта */
+            white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        }
+
+        .images-container,
+        .additional-images-container {
+            position: absolute;
+            display: flex;
+            align-items: center;
+        }
+
+        .images-container {
+            top: 75px; /* Отступ от верхней границы */
+            left: 85px; /* Отступ от левой границы */
+        }
+
+        .additional-images-container {
+            top: 375px; /* Отступ от верхней границы для нового блока, чтобы выровнять его по уровню */
+            left: 85px; /* Отступ от левой границы */
+        }
+
+        .images-container div,
+        .additional-images-container div {
+            margin-right: 30px; /* Отступ между изображениями */
+            text-align: center; /* Выравнивание текста по центру */
+            position: relative; /* Добавляем relative для позиционирования псевдоэлементов */
+        }
+
+        .images-container img,
+        .additional-images-container img {
+            width: 160px; /* Ширина изображений */
+            height: 160px; /* Высота изображений */
+            border-radius: 20px; /* Закругление углов для круглых изображений */
+            margin-bottom: 10px; /* Отступ снизу от изображения */
+            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7); /* Белое свечение */
+            transition: box-shadow 0.3s ease, transform 0.3s ease; /* Переходы для анимации */
+        }
+
+        .images-container img:hover,
+.additional-images-container img:hover {
+    transform: scale(1.05); /* Увеличение изображения при наведении */
+    box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0.9); /* Увеличенное свечение при наведении */
+}
+
+.image-text-mines,
+.image-text-royalmines,
+.image-text-coinflip,
+.image-text-brawl {
+    color: #ffffff; /* Цвет текста */
+    font-size: 20px; /* Размер шрифта для текста */
+    margin-bottom: 10px; /* Отступ снизу от текста */
+    padding-left: 20px; /* Добавляем отступ слева для сдвига текста правее */
+}
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(90deg, #00b09b, rgb(123, 27, 202)); /* Градиент зеленого цвета */
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 25px; /* Закругленные углы кнопки */
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Анимация для трансформации и тени */
+        }
+
+        .button2 {
+            display: inline-block;
+            background: linear-gradient(90deg, #00b09b, rgb(123, 27, 202)); /* Градиент зеленого цвета */
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 25px; /* Закругленные углы кнопки */
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .button:hover {
+            transform: scale(1.1); /* Увеличение кнопки при наведении */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Тень при наведении */
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="avatar.jpg" alt="Avatar">
+        <div class="banner-text">GORILLAS KAZIK</div>
+    </div>
+
+    <div class="images-container">
+        <div>
+            <img src="mines.png" alt="Mines">
+            <div class="image-text-mines">MINES</div>
+            <a href="#" class="button">ОТКРЫТЬ</a>
+        </div>
+        <div>
+            <img src="royalmines.png" alt="Royal Mines">
+            <div class="image-text-royalmines">ROYAL</div>
+            <a href="#" class="button">ОТКРЫТЬ</a>
+        </div>
+    </div>
+
+    <div class="additional-images-container">
+        <div>
+            <img src="coinflip.png" alt="Coinflip">
+            <div class="image-text-coinflip">COINFLIP</div>
+            <a href="#" class="button2">Скоро..</a>
+        </div>
+        <div>
+            <img src="brawl.png" alt="Brawl">
+            <div class="image-text-brawl">BRAWL</div>
+            <a href="#" class="button2">Скоро..</a>
+        </div>
+    </div>
+</body>
+</html>
