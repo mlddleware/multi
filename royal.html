@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Веб приложение для Телеграм бота</title>
+    <style>
+        @font-face {
+            font-family: 'HomeVideo';
+            src: url('Intro.otf') format('opentype');
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            background-image: url('royal.png');
+            background-size: cover;
+            background-position: center center;
+            margin: 0;
+            font-family: 'HomeVideo', Arial, sans-serif;
+        }
+        .main-square {
+            width: 360px;
+            height: 300px;
+            background-color: #648831;
+            border-radius: 15px;
+            box-shadow: 0 0 10px 5px #845D37;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 12px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .inner-square {
+            width: 100%;
+            height: 100%;
+            background-color: #CFD746;
+            border-radius: 5px;
+            position: relative;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 85%;
+            height: 85%;
+            margin: 10%;
+            background-image: url('sled.png');
+            background-size: cover;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .animate-in {
+            opacity: 1;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .slider {
+            margin: 0 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: 'HomeVideo', Arial, sans-serif;
+            background-color: #238FA9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .trap-label {
+            margin-left: 10px;
+        }
+        .custom-button, .restore-button {
+            width: 70px;
+            height: 70px;
+            background-color: #FCAD26; /* Цвет кнопки */
+            background-size: 38px 38px; /* Установка размера изображения */
+            background-repeat: no-repeat; /* Запрещаем повторение изображения */
+            background-position: center; /* Центрирование изображения */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 9px; /* Закругленные углы */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: #d9534f; /* Цвет кнопки назад */
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 25px; /* Закругленные углы кнопки */
+            text-decoration: none;
+            text-align: center;
+            margin-top: 5px; /* Отступ сверху для кнопки "Вернуться" */
+        }
+        .back-button:hover {
+            background-color: #c9302c; /* Цвет кнопки при наведении */
+        }
+
+        .custom-button {
+            background-image: url('play.png'); /* Путь к изображению */
+        }
+        .restore-button {
+            background-image: url('restore.png'); /* Путь к изображению */
+        }
+        .back-button {
+            background-image: url('back.png'); /* Путь к изображению */
+        }
+        .button-container {
+            display: flex;
+            gap: 10px; /* Расстояние между кнопками */
+        }
+        /* Кнопка "Вернуться" расположена ниже кнопок custom и restore */
+        .additional-button-container {
+            margin-top: 20px;
+        }
+        /* Стиль для модального окна */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 365px;
+            height: 140px;
+            background-color: white;
+            border: 2px solid #238FA9;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .modal p {
+            font-size: 18px;
+            color: black;
+            margin: 20px 0;
+        }
+        .modal button {
+            background-color: #238FA9;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .modal button:hover {
+            background-color: #1e7d91;
+        }
+
+        /* Оверлей для модального окна */
+        .modal-overlay {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 style="font-size: 40px; color:#FCAD26; margin-bottom: 20px;">GORILLA KAZIK</h1>
+    </div>
+
+    <div class="main-square" id="mainSquare">
+        <!-- 30 квадратов -->
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+        <div class="inner-square"><div class="overlay"></div></div>
+    </div>
+
+    <div class="button-container">
+        <button class="restore-button" onclick="restoreSquares()"></button>
+        <button class="custom-button" onclick="replaceSquares()"></button>
+    </div>
+
+    <div class="additional-button-container">
+        <button class="back-button" onclick="window.location.href='main.html'">Вернуться</button>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="modal">
+        <p>Игра окончена</p>
+        <button onclick="closeModal()">OK</button>
+    </div>
+
+    <script>
+        let animating = false;
+        const mainSquare = document.getElementById('mainSquare');
+        const overlays = document.querySelectorAll('.overlay');
+        const modal = document.getElementById('modal');
+        const modalOverlay = document.getElementById('modalOverlay');
+
+        function restoreSquares() {
+            if (animating) return;
+            animating = true;
+            overlays.forEach(overlay => {
+                overlay.classList.remove('animate-in');
+                overlay.style.backgroundImage = 'url("sled.png")';
+                setTimeout(() => overlay.classList.add('animate-in'), 100);
+            });
+            setTimeout(() => animating = false, 1000);
+        }
+
+        function replaceSquares() {
+            if (animating) return;
+            animating = true;
+            overlays.forEach(overlay => {
+                overlay.classList.remove('animate-in');
+                overlay.style.backgroundImage = 'url("player.png")';
+                setTimeout(() => overlay.classList.add('animate-in'), 100);
+            });
+            setTimeout(() => animating = false, 1000);
+        }
+
+        function showModal() {
+            modal.style.display = 'block';
+            modalOverlay.style.display = 'block';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            modalOverlay.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

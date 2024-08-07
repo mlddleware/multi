@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Веб приложение для Телеграм бота</title>
+    <style>
+        @font-face {
+            font-family: 'HomeVideo';
+            src: url('HomeVideo-Regular.otf') format('opentype');
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            background-image: url('moon.png');
+            background-size: cover;
+            background-position: center center;
+            margin: 0;
+            font-family: 'HomeVideo', Arial, sans-serif; /* Используем шрифт HomeVideo */
+        }
+        .main-square {
+            width: 220px;
+            height: 220px;
+            background-color: #0A101E;
+            border-radius: 15px;
+            box-shadow: 0 0 10px 5px #B4750A;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 6px; /* Увеличено расстояние между квадратами */
+            padding: 10px; /* Увеличена внутренняя отступ */
+            box-sizing: border-box;
+            margin-bottom: 20px; /* Отступ для кнопки */
+            position: relative; /* Позиционирование для абсолютного элемента */
+        }
+        .inner-square {
+            width: 100%;
+            height: 100%;
+            background-color: #238FA9;
+            border-radius: 5px;
+        }
+        .star {
+            width: 100%;
+            height: 100%;
+            background-image: url('star.png');
+            background-size: cover;
+            border-radius: 5px;
+            opacity: 0; /* Начально скрыто */
+            transition: opacity 0.5s ease-in-out; /* Плавность перехода */
+        }
+        .animate-out {
+            animation: fadeOut 0.5s ease-in-out forwards; /* Анимация исчезновения */
+        }
+        .animate-in {
+            animation: fadeIn 0.5s ease-in-out forwards; /* Анимация появления */
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px; /* Отступ для кнопки */
+        }
+        .slider {
+            margin: 0 10px;
+        }
+        button {
+            padding: 5px 20px;
+            font-size: 16px;
+            font-family: 'HomeVideo', Arial, sans-serif; /* Применяем шрифт HomeVideo */
+            background-color: #238FA9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: -10px; /* Дополнительный отступ */
+        }
+        .trap-label {
+            margin-left: 10px; /* Отступ слева для текста "КОЛ-ВО ЛОВУШЕК" */
+        }
+        .back-button {
+            display: inline-block;
+            background-color: #d9534f; /* Цвет кнопки назад */
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 25px; /* Закругленные углы кнопки */
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px; /* Отступ сверху для кнопки "Вернуться" */
+        }
+        .back-button:hover {
+            background-color: #c9302c; /* Цвет кнопки при наведении */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 style="font-size: 24px; margin-bottom: 20px;">GORILLAS KAZIK</h1>
+    </div>
+
+    <div class="main-square" id="mainSquare">
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+        <div class="inner-square"></div>
+    </div>
+    
+    <div>
+        <p class="trap-label">КОЛ-ВО ЛОВУШЕК</p>
+        <div class="slider-container">
+            <input type="range" min="1" max="7" step="2" value="1" class="slider" id="trapSlider" oninput="updateTrapCount()">
+            <span id="trapCount">1</span>
+        </div>
+    </div>
+    
+    <button onclick="replaceSquares()">ПОЛУЧИТЬ<br>СИГНАЛ</button>
+    
+    <a href="main.html" class="back-button">Вернуться</a>
+
+    <script>
+        let initialSquaresHTML; // Для хранения начального состояния квадратов
+        let animating = false; // Флаг, указывающий на выполнение анимации
+
+        function updateTrapCount() {
+            const trapSlider = document.getElementById('trapSlider');
+            const trapCount = document.getElementById('trapCount');
+            trapCount.textContent = trapSlider.value;
+        }
+
+        function replaceSquares() {
+            if (animating) return; // Проверяем, выполняется ли анимация
+            animating = true; // Устанавливаем флаг, что анимация началась
+
+            const trapSlider = document.getElementById('trapSlider').value;
+            const squares = document.querySelectorAll('.inner-square');
+            const animateClass = trapSlider === '1' ? 'animate-out' : 'animate-in'; // Определяем класс анимации
+
+            if (squares.length === 0) {
+                animating = false; // Сбрасываем флаг, если нет квадратов
+                return;
+            }
+
+            let count;
+            if (trapSlider === '1') {
+                count = 10;
+            } else if (trapSlider === '3') {
+                count = 5;
+            } else if (trapSlider === '5') {
+                count = 4;
+            } else if (trapSlider === '7') {
+                count = 3;
+            }
+
+            if (!initialSquaresHTML) {
+                initialSquaresHTML = document.getElementById('mainSquare').innerHTML; // Сохраняем начальное состояние квадратов
+            }
+
+            // Вызываем resetSquares перед заменой квадратов
+            resetSquares();
+
+            const randomIndices = getRandomIndices(squares.length, count);
+
+            randomIndices.forEach((index, i) => {
+                const square = squares[index];
+                setTimeout(() => {
+                    square.classList.add(animateClass);
+                    setTimeout(() => {
+                        const star = document.createElement('div');
+                        star.classList.add('star', 'animate-in');
+                        square.replaceWith(star);
+                        if (i === randomIndices.length - 1) {
+                            animating = false; // Сбрасываем флаг после завершения анимации
+                        }
+                    }, 0); // Задержка перед появлением star.png
+                }, i * 1000); // Задержка перед исчезновением квадрата
+            });
+        }
+
+        function resetSquares() {
+            const mainSquare = document.getElementById('mainSquare');
+            const stars = mainSquare.querySelectorAll('.star');
+            stars.forEach(star => {
+                const square = document.createElement('div');
+                square.classList.add('inner-square');
+                star.replaceWith(square);
+            });
+        }
+
+        function getRandomIndices(max, count) {
+            const indices = [];
+            while (indices.length < count) {
+                const randomIndex = Math.floor(Math.random() * max);
+                if (!indices.includes(randomIndex)) {
+                    indices.push(randomIndex);
+                }
+            }
+            return indices;
+        }
+
+        document.getElementById('trapSlider').addEventListener('input', updateTrapCount);
+    </script>
+</body>
+</html>
