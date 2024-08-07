@@ -17,7 +17,7 @@
             align-items: center;
             height: 100vh;
             background-color: #f0f0f0;
-            background-image: url('royal.png');
+            background-image: url('moon.png');
             background-size: cover;
             background-position: center center;
             margin: 0;
@@ -26,9 +26,9 @@
         .main-square {
             width: 360px;
             height: 300px;
-            background-color: #648831;
+            background-color: #0A101E;
             border-radius: 15px;
-            box-shadow: 0 0 10px 5px #845D37;
+            box-shadow: 0 0 10px 5px #2840ca;
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             grid-template-rows: repeat(5, 1fr);
@@ -41,7 +41,7 @@
         .inner-square {
             width: 100%;
             height: 100%;
-            background-color: #CFD746;
+            background-color: #238FA9;
             border-radius: 5px;
             position: relative;
         }
@@ -86,7 +86,7 @@
         .custom-button, .restore-button {
             width: 70px;
             height: 70px;
-            background-color: #FCAD26; /* Цвет кнопки */
+            background-color: #238FA9; /* Цвет кнопки */
             background-size: 38px 38px; /* Установка размера изображения */
             background-repeat: no-repeat; /* Запрещаем повторение изображения */
             background-position: center; /* Центрирование изображения */
@@ -101,39 +101,17 @@
             border-radius: 9px; /* Закругленные углы */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
         }
-
-        .back-button {
-            display: inline-block;
-            background-color: #d9534f; /* Цвет кнопки назад */
-            color: white;
-            padding: 10px 20px;
-            font-size: 18px;
-            border-radius: 25px; /* Закругленные углы кнопки */
-            text-decoration: none;
-            text-align: center;
-            margin-top: 5px; /* Отступ сверху для кнопки "Вернуться" */
-        }
-        .back-button:hover {
-            background-color: #c9302c; /* Цвет кнопки при наведении */
-        }
-
         .custom-button {
             background-image: url('play.png'); /* Путь к изображению */
         }
         .restore-button {
             background-image: url('restore.png'); /* Путь к изображению */
         }
-        .back-button {
-            background-image: url('back.png'); /* Путь к изображению */
-        }
         .button-container {
             display: flex;
             gap: 10px; /* Расстояние между кнопками */
         }
-        /* Кнопка "Вернуться" расположена ниже кнопок custom и restore */
-        .additional-button-container {
-            margin-top: 20px;
-        }
+
         /* Стиль для модального окна */
         .modal {
             display: none; /* Скрыто по умолчанию */
@@ -182,11 +160,25 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
+        .back-button {
+            display: inline-block;
+            background-color: #d9534f; /* Цвет кнопки назад */
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 25px; /* Закругленные углы кнопки */
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px; /* Отступ сверху для кнопки "Вернуться" */
+        }
+        .back-button:hover {
+            background-color: #c9302c; /* Цвет кнопки при наведении */
+        }
     </style>
 </head>
 <body>
     <div>
-        <h1 style="font-size: 40px; color:#FCAD26; margin-bottom: 20px;">GORILLA KAZIK</h1>
+        <h1 style="font-size: 40px; color:#11152b; margin-bottom: 20px;">GORILLAS KAZIK</h1>
     </div>
 
     <div class="main-square" id="mainSquare">
@@ -221,17 +213,14 @@
         <div class="inner-square"><div class="overlay"></div></div>
         <div class="inner-square"><div class="overlay"></div></div>
         <div class="inner-square"><div class="overlay"></div></div>
-        <div class="inner-square"><div class="overlay"></div></div>
     </div>
-
+    
     <div class="button-container">
         <button class="restore-button" onclick="restoreSquares()"></button>
         <button class="custom-button" onclick="replaceSquares()"></button>
     </div>
 
-    <div class="additional-button-container">
-        <button class="back-button" onclick="window.location.href='main.html'">Вернуться</button>
-    </div>
+    <a href="main.html" class="back-button">Вернуться</a>
 
     <!-- Модальное окно -->
     <div class="modal-overlay" id="modalOverlay"></div>
@@ -242,42 +231,101 @@
 
     <script>
         let animating = false;
-        const mainSquare = document.getElementById('mainSquare');
-        const overlays = document.querySelectorAll('.overlay');
-        const modal = document.getElementById('modal');
-        const modalOverlay = document.getElementById('modalOverlay');
+        let clickCount = 0;
+        let restoring = false;
 
-        function restoreSquares() {
-            if (animating) return;
-            animating = true;
-            overlays.forEach(overlay => {
-                overlay.classList.remove('animate-in');
-                overlay.style.backgroundImage = 'url("sled.png")';
-                setTimeout(() => overlay.classList.add('animate-in'), 100);
-            });
-            setTimeout(() => animating = false, 1000);
+        function updateTrapCount() {
+            const trapSlider = document.getElementById('trapSlider');
+            const trapCount = document.getElementById('trapCount');
+            trapCount.textContent = trapSlider.value;
         }
 
         function replaceSquares() {
-            if (animating) return;
+            if (animating || restoring) return;
             animating = true;
-            overlays.forEach(overlay => {
+
+            const squares = document.querySelectorAll('.inner-square');
+
+            if (squares.length === 0) {
+                animating = false;
+                return;
+            }
+
+            const rows = 5;
+            const columns = 6;
+
+            if (clickCount < rows) {
+                const startIndex = squares.length - (clickCount + 1) * columns;
+                const endIndex = squares.length - clickCount * columns;
+                const currentRowSquares = Array.from(squares).slice(startIndex, endIndex);
+                const randomIndex = Math.floor(Math.random() * currentRowSquares.length);
+                const randomSquare = currentRowSquares[randomIndex];
+                const overlay = randomSquare.querySelector('.overlay');
+                overlay.classList.add('animate-in');
+            } else {
+                // Стираем все следы
+                squares.forEach(square => {
+                    const overlay = square.querySelector('.overlay');
+                    overlay.classList.remove('animate-in');
+                });
+
+                // Добавляем новые 5 следов
+                for (let i = 0; i < rows; i++) {
+                    const startIndex = squares.length - (i + 1) * columns;
+                    const endIndex = squares.length - i * columns;
+                    const currentRowSquares = Array.from(squares).slice(startIndex, endIndex);
+                    const randomIndex = Math.floor(Math.random() * currentRowSquares.length);
+                    const randomSquare = currentRowSquares[randomIndex];
+                    const overlay = randomSquare.querySelector('.overlay');
+                    overlay.classList.add('animate-in');
+                }
+
+                // Показываем модальное окно после 15 кликов
+                if (clickCount >= 15) {
+                    showModal();
+                }
+
+                // Сбрасываем счетчик кликов после 10 кликов
+                if (clickCount >= rows + 15 - 1) {
+                    clickCount = 0;
+                }
+            }
+
+            clickCount++;
+            animating = false;
+        }
+
+        function restoreSquares() {
+            if (restoring) return;
+            restoring = true;
+
+            const squares = document.querySelectorAll('.inner-square');
+
+            // Удаляем все активные следы
+            squares.forEach(square => {
+                const overlay = square.querySelector('.overlay');
                 overlay.classList.remove('animate-in');
-                overlay.style.backgroundImage = 'url("player.png")';
-                setTimeout(() => overlay.classList.add('animate-in'), 100);
             });
-            setTimeout(() => animating = false, 1000);
+
+            // Возвращаем счетчик кликов на 0
+            clickCount = 0;
+
+            // Восстанавливаем статус анимации
+            restoring = false;
         }
 
         function showModal() {
-            modal.style.display = 'block';
-            modalOverlay.style.display = 'block';
+            document.getElementById('modalOverlay').style.display = 'block';
+            document.getElementById('modal').style.display = 'block';
         }
 
         function closeModal() {
-            modal.style.display = 'none';
-            modalOverlay.style.display = 'none';
+            document.getElementById('modalOverlay').style.display = 'none';
+            document.getElementById('modal').style.display = 'none';
+            restoreSquares(); // Вызов функции restoreSquares при закрытии модального окна
         }
+
+        document.getElementById('trapSlider').addEventListener('input', updateTrapCount);
     </script>
 </body>
 </html>
