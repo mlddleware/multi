@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Веб приложение для Телеграм бота</title>
+    <style>
+        @font-face {
+            font-family: 'HomeVideo';
+            src: url('Intro.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Rostov';
+            src: url('rostov.ttf') format('truetype');
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333333;
+            background-size: cover;
+            background-position: center center;
+            margin: 0;
+            font-family: 'HomeVideo', Arial, sans-serif;
+            position: relative; /* Добавляем relative для позиционирования элементов внутри */
+        }
+
+        .banner {
+            width: 385px;
+            height: 50px;
+            background-color: #2a2a2a;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            padding-left: 10px; /* Отступ слева */
+            border-radius: 15px; /* Закругленные углы */
+        }
+
+        .banner img {
+            height: 40px; /* Высота изображения, чтобы оно поместилось в баннер */
+            width: auto;
+            border-radius: 50%; /* Закругление изображения */
+            margin-right: 30px; /* Отступ справа от изображения */
+        }
+
+        .banner-text {
+            font-family: 'Rostov', Arial, sans-serif;
+            color: #ffffff; /* Цвет текста */
+            font-size: 35px; /* Размер шрифта */
+            white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+        }
+
+        .window {
+            width: 350px;
+            height: 450px;
+            position: absolute;
+            top: 110px; /* Отступ вниз от баннера */
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Градиентный фон */
+            border-radius: 20px; /* Закругленные углы */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тень для окна */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Анимация для трансформации и тени */
+        }
+
+        .window:hover {
+            transform: scale(1.05); /* Увеличение окна при наведении */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Тень при наведении */
+        }
+
+        .window-text {
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px; /* Отступ снизу, чтобы кнопка не прилипала к тексту */
+        }
+
+        .register-button {
+            width: 250px;
+            height: 55px;
+            background: linear-gradient(90deg, #00b09b, #3dcf5d); /* Градиент зеленого цвета */
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px; /* Закругленные углы */
+            cursor: pointer;
+            text-align: center;
+            line-height: 55px; /* Выравнивание текста по вертикали */
+            transition: background 0.3s ease, transform 0.3s ease; /* Анимация для фона и трансформации */
+            text-decoration: none;
+        }
+
+        .register-button:hover {
+            background: linear-gradient(90deg, #28c27a, #009d7f); /* Изменение градиента при наведении */
+            transform: scale(1.05); /* Увеличение кнопки при наведении */
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="avatar.jpg" alt="Avatar">
+        <div class="banner-text">GORILLAS KAZIK</div>
+    </div>
+    <div class="window">
+        <div class="window-text">Регистрация</div>
+        <a href="https://www.google.com/" class="register-button">Зарегистрироваться</a>
+    </div>
+</body>
+</html>
