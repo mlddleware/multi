@@ -47,13 +47,13 @@
             height: 40px; /* Высота изображения, чтобы оно поместилось в баннер */
             width: auto;
             border-radius: 50%; /* Закругление изображения */
-            margin-right: 23px; /* Отступ справа от изображения */
+            margin-right: 10px; /* Отступ справа от изображения */
         }
 
         .banner-text {
-            font-family: 'Rostov', Arial, sans-serif;
+            font-family: 'Intro', Arial, sans-serif;
             color: #ffffff; /* Цвет текста */
-            font-size: 35px; /* Размер шрифта */
+            font-size: 28px; /* Размер шрифта */
             white-space: nowrap; /* Чтобы текст не переносился на новую строку */
         }
 
@@ -119,6 +119,7 @@
             text-decoration: none;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease; /* Анимация для трансформации и тени */
+            cursor: pointer; /* Курсор в виде указателя для кнопки */
         }
 
         .button2 {
@@ -141,19 +142,19 @@
 <body>
     <div class="banner">
         <img src="avatar.jpg" alt="Avatar">
-        <div class="banner-text">GORILLAS KAZIK</div>
+        <div class="banner-text">Сигнальные боты</div>
     </div>
 
     <div class="images-container">
         <div>
             <img src="mines.png" alt="Mines">
             <div class="image-text-mines">MINES</div>
-            <a href="#" class="button">ОТКРЫТЬ</a>
+            <a href="#" class="button" id="minesButton">ОТКРЫТЬ</a>
         </div>
         <div>
             <img src="royalmines.png" alt="Royal Mines">
             <div class="image-text-royalmines">ROYAL</div>
-            <a href="#" class="button">ОТКРЫТЬ</a>
+            <a href="#" class="button" id="royalButton">ОТКРЫТЬ</a>
         </div>
     </div>
 
@@ -169,5 +170,15 @@
             <a href="#" class="button2">Скоро..</a>
         </div>
     </div>
+
+    <script>
+        document.getElementById('minesButton').addEventListener('click', function() {
+            window.location.href = 'mines.html';
+        });
+
+        document.getElementById('royalButton').addEventListener('click', function() {
+            window.location.href = 'royal.html';
+        });
+    </script>
 </body>
 </html>
