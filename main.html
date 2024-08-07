@@ -61,22 +61,24 @@
         .additional-images-container {
             position: absolute;
             display: flex;
-            align-items: center;
+            justify-content: center; /* Центрирование по горизонтали внутри контейнера */
+            gap: 30px; /* Отступ между элементами внутри контейнера */
         }
 
         .images-container {
             top: 75px; /* Отступ от верхней границы */
-            left: 85px; /* Отступ от левой границы */
+            left: 50%;
+            transform: translateX(-50%); /* Центрирование по горизонтали */
         }
 
         .additional-images-container {
-            top: 375px; /* Отступ от верхней границы для нового блока, чтобы выровнять его по уровню */
-            left: 85px; /* Отступ от левой границы */
+            top: 375px; /* Отступ от верхней границы для нового блока */
+            left: 50%;
+            transform: translateX(-50%); /* Центрирование по горизонтали */
         }
 
         .images-container div,
         .additional-images-container div {
-            margin-right: 30px; /* Отступ между изображениями */
             text-align: center; /* Выравнивание текста по центру */
             position: relative; /* Добавляем relative для позиционирования псевдоэлементов */
         }
@@ -92,20 +94,20 @@
         }
 
         .images-container img:hover,
-.additional-images-container img:hover {
-    transform: scale(1.05); /* Увеличение изображения при наведении */
-    box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0.9); /* Увеличенное свечение при наведении */
-}
+        .additional-images-container img:hover {
+            transform: scale(1.05); /* Увеличение изображения при наведении */
+            box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0.9); /* Увеличенное свечение при наведении */
+        }
 
-.image-text-mines,
-.image-text-royalmines,
-.image-text-coinflip,
-.image-text-brawl {
-    color: #ffffff; /* Цвет текста */
-    font-size: 20px; /* Размер шрифта для текста */
-    margin-bottom: 10px; /* Отступ снизу от текста */
-    padding-left: 20px; /* Добавляем отступ слева для сдвига текста правее */
-}
+        .image-text-mines,
+        .image-text-royalmines,
+        .image-text-coinflip,
+        .image-text-brawl {
+            color: #ffffff; /* Цвет текста */
+            font-size: 20px; /* Размер шрифта для текста */
+            margin-bottom: 10px; /* Отступ снизу от текста */
+            padding-left: 20px; /* Добавляем отступ слева для сдвига текста правее */
+        }
 
         .button {
             display: inline-block;
