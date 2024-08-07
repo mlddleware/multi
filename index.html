@@ -26,11 +26,11 @@
             background-position: center center;
             margin: 0;
             font-family: 'HomeVideo', Arial, sans-serif;
-            position: relative; /* Добавляем relative для позиционирования элементов внутри */
+            position: relative;
         }
 
         .banner {
-            width: 385px;
+            width: 375px;
             height: 50px;
             background-color: #2a2a2a;
             position: absolute;
@@ -39,69 +39,107 @@
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            padding-left: 50px; /* Отступ слева */
-            border-radius: 15px; /* Закругленные углы */
+            padding-left: 10px;
+            border-radius: 15px;
         }
 
         .banner img {
-            height: 40px; /* Высота изображения, чтобы оно поместилось в баннер */
+            height: 40px;
             width: auto;
-            border-radius: 50%; /* Закругление изображения */
-            margin-right: 30px; /* Отступ справа от изображения */
+            border-radius: 50%;
+            margin-right: 30px;
         }
 
         .banner-text {
             font-family: 'Rostov', Arial, sans-serif;
-            color: #ffffff; /* Цвет текста */
-            font-size: 35px; /* Размер шрифта */
-            white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+            color: #ffffff;
+            font-size: 35px;
+            white-space: nowrap;
         }
 
         .window {
             width: 300px;
             height: 400px;
             position: absolute;
-            top: 110px; /* Отступ вниз от баннера */
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Градиентный фон */
-            border-radius: 20px; /* Закругленные углы */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тень для окна */
+            top: 110px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Анимация для трансформации и тени */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .window:hover {
-            transform: scale(1.05); /* Увеличение окна при наведении */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Тень при наведении */
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
         }
 
         .window-text {
             color: white;
             font-size: 24px;
             text-align: center;
-            margin-bottom: 280px; /* Отступ снизу, чтобы кнопка не прилипала к тексту */
+            margin-bottom: 280px;
         }
 
         .register-button {
             width: 250px;
             height: 55px;
-            background: linear-gradient(90deg, #00b09b, #3dcf5d); /* Градиент зеленого цвета */
+            background: linear-gradient(90deg, #00b09b, #3dcf5d);
             color: white;
             font-size: 18px;
             border: none;
-            border-radius: 25px; /* Закругленные углы */
+            border-radius: 25px;
             cursor: pointer;
             text-align: center;
-            line-height: 55px; /* Выравнивание текста по вертикали */
-            transition: background 0.3s ease, transform 0.3s ease; /* Анимация для фона и трансформации */
+            line-height: 55px;
+            transition: background 0.3s ease, transform 0.3s ease;
             text-decoration: none;
         }
 
         .register-button:hover {
-            background: linear-gradient(90deg, #28c27a, #009d7f); /* Изменение градиента при наведении */
-            transform: scale(1.05); /* Увеличение кнопки при наведении */
+            background: linear-gradient(90deg, #28c27a, #009d7f);
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 100px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Rostov', Arial, sans-serif;
+        }
+
+        .modal p {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .modal-button {
+            width: 80px;
+            height: 30px;
+            background: #00b09b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .modal-button:hover {
+            background: #009d7f;
         }
     </style>
 </head>
@@ -112,7 +150,26 @@
     </div>
     <div class="window">
         <div class="window-text">Регистрация</div>
-        <a href="https://1wkaml.life/casino/list?open=register&p=gr2r" class="register-button">Зарегистрироваться</a>
+        <button class="register-button" onclick="copyLink()">Зарегистрироваться</button>
     </div>
+    <div class="modal" id="modal">
+        <p>Ссылка скопирована!<br>Перейдите по ней в браузере и зарегистрируйтесь</p>
+        <button class="modal-button" onclick="closeModal()">OK</button>
+    </div>
+
+    <script>
+        function copyLink() {
+            const link = "https://1wkaml.life/casino/list?open=register&p=gr2r";
+            navigator.clipboard.writeText(link).then(() => {
+                document.getElementById('modal').style.display = 'block';
+            }, () => {
+                alert('Не удалось скопировать ссылку');
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
