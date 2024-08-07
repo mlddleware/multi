@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device=300, height=device=400, maximum-scale=1.0, user-scalable=no">
     <title>Веб приложение для Телеграм бота</title>
     <style>
         @font-face {
@@ -13,6 +13,11 @@
         @font-face {
             font-family: 'Rostov';
             src: url('rostov.ttf') format('truetype');
+        }
+        
+        @font-face {
+            font-family: 'Link';
+            src: url('link.ttf') format('truetype');
         }
 
         body {
@@ -30,7 +35,7 @@
         }
 
         .banner {
-            width: 375px;
+            width: 360px;
             height: 50px;
             background-color: #2a2a2a;
             position: absolute;
@@ -57,11 +62,10 @@
             white-space: nowrap;
         }
 
-        .window {
+        .window, .window-finished {
             width: 300px;
-            height: 400px;
             position: absolute;
-            top: 110px;
+            top: 75px;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             border-radius: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -70,26 +74,42 @@
             align-items: center;
             justify-content: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        .window:hover {
+        .window:hover, .window-finished:hover {
             transform: scale(1.05);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .window-text {
+        .window-text, .finished-text {
             color: white;
             font-size: 24px;
             text-align: center;
-            margin-bottom: 280px;
+            margin-bottom: 20px;
         }
 
-        .register-button {
+        .instructions {
+            color: white;
+            font-size: 13px;
+            font-family: 'Arial', Arial, sans-serif;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .register-button, .continue-button, .confirm-button {
             width: 250px;
             height: 55px;
             background: linear-gradient(90deg, #00b09b, #3dcf5d);
             color: white;
-            font-size: 18px;
+            font-size: 15px;
             border: none;
             border-radius: 25px;
             cursor: pointer;
@@ -97,9 +117,10 @@
             line-height: 55px;
             transition: background 0.3s ease, transform 0.3s ease;
             text-decoration: none;
+            font-family: 'Intro', Arial, sans-serif;
         }
 
-        .register-button:hover {
+        .register-button:hover, .continue-button:hover, .confirm-button:hover {
             background: linear-gradient(90deg, #28c27a, #009d7f);
             transform: scale(1.05);
         }
@@ -141,6 +162,29 @@
         .modal-button:hover {
             background: #009d7f;
         }
+
+        .id-input {
+            width: 200px;
+            height: 35px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .id-input:focus {
+            border-color: #00b09b;
+            outline: none;
+        }
+
+        .input-label {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -148,9 +192,23 @@
         <img src="avatar.jpg" alt="Avatar">
         <div class="banner-text">GORILLAS KAZIK</div>
     </div>
-    <div class="window">
+    <div class="window" id="window">
         <div class="window-text">Регистрация</div>
-        <button class="register-button" onclick="copyLink()">Зарегистрироваться</button>
+        <div class="instructions">
+            <p>1. Для начала зарегистрируйтесь по ссылке скопировав её нажав на кнопку снизу.</p>
+            <p>2. После успешной регистрации скопируйте ваш айди на сайте (Вкладка 'пополнение' и в правом верхнем углу будет ваш ID).</p>
+            <p>3. Затем нажмите на кнопку 'Продолжить', и введите ваш айди.</p>
+        </div>
+        <div class="button-container">
+            <button class="register-button" onclick="copyLink()">Скопировать ссылку</button>
+            <button class="continue-button" onclick="continueAction()">Продолжить</button>
+        </div>
+    </div>
+    <div class="window-finished" id="window-finished" style="display: none;">
+        <div class="finished-text">ПРОВЕРКА</div>
+        <p class="input-label">Вставьте ваш ID аккаунта:</p>
+        <input type="text" class="id-input" id="user-id" maxlength="9" pattern="\d+" title="ID может содержать только цифры" placeholder="ID Аккаунта">
+        <button class="confirm-button" onclick="confirmID()">Подтвердить</button>
     </div>
     <div class="modal" id="modal">
         <p>Ссылка скопирована!<br>Перейдите по ней в браузере и зарегистрируйтесь</p>
@@ -167,9 +225,25 @@
             });
         }
 
+        function continueAction() {
+            document.getElementById('window').style.display = 'none';
+            document.getElementById('window-finished').style.display = 'flex';
+        }
+
         function closeModal() {
             document.getElementById('modal').style.display = 'none';
         }
+
+        function confirmID() {
+    const userID = document.getElementById('user-id').value;
+    if (userID.match(/^\d{1,9}$/)) {
+        // ID подтвержден, перенаправление на main.html
+        window.location.href = 'main.html';
+    } else {
+        alert('Пожалуйста, введите корректный ID (от 1 до 9 цифр).');
+    }
+}
+
     </script>
 </body>
 </html>
