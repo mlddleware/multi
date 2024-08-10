@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>График</title>
+    <style>
+        @font-face {
+            font-family: 'HomeVideo';
+            src: url('Intro.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Rostov';
+            src: url('rostov.ttf') format('truetype');
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #333333, #000000);
+            margin: 0;
+            font-family: 'HomeVideo', Arial, sans-serif;
+            position: relative;
+        }
+
+        .banner {
+            width: 385px;
+            height: 50px;
+            background: linear-gradient(135deg, #2a2a2a, #1c1c1c);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            border-radius: 15px;
+            top: 0;
+        }
+
+        .banner img {
+            height: 40px;
+            width: auto;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .banner-text {
+            font-family: 'Rostov', Arial, sans-serif;
+            color: #ffffff;
+            font-size: 25px;
+            white-space: nowrap;
+            margin-left: 35px;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            margin-top: -300px; /* Удален отступ сверху */
+            position: relative;
+        }
+
+        .title {
+            font-family: 'HomeVideo', Arial, sans-serif;
+            color: #ffffff;
+            font-size: 36px;
+            margin-bottom: 10px; /* Уменьшен отступ снизу */
+        }
+
+        .circle-container {
+            position: relative;
+            width: 250px;
+            height: 175px;
+            margin-bottom: 10px; /* Уменьшен отступ между кругом и текстом */
+        }
+
+        .circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.7);
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.3s ease;
+            position: relative;
+            --before-content: '?'; /* CSS переменная для управления содержимым */
+        }
+
+        .circle::before {
+            content: var(--before-content);
+            font-family: 'HomeVideo', Arial, sans-serif;
+            color: #ffffff;
+            font-size: 80px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease; /* Добавьте переход для плавного скрытия */
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(90deg, #00b09b, #7b1bca);
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 25px;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            margin: 10px; /* Добавлен отступ для кнопок */
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .device-info {
+            font-family: 'HomeVideo', Arial, sans-serif;
+            color: #ffffff;
+            font-size: 15px;
+            margin: 10px 0; /* Уменьшен отступ между текстом и кнопкой */
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 8px solid #1bca50;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 40%;
+            left: 35%;
+            transform: translate(-50%, -50%);
+            display: none; /* Скрыто по умолчанию */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #fefefe, #e0e0e0);
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            text-align: center;
+            font-family: 'HomeVideo', Arial, sans-serif;
+        }
+
+        .return-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff4b2b, #ff416c);
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 25px;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            margin: 10px; /* Добавлен отступ для кнопок */
+        }
+
+        .return-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="ava.jpg" alt="Avatar">
+        <div class="banner-text">ОПРЕДЕЛИТЬ ИГРУ</div>
+    </div>
+
+    <div class="content">
+        <div class="title">GAME PICKER</div>
+        <div class="circle-container">
+            <div class="circle" id="circle"></div>
+            <div class="loader" id="loader"></div>
+        </div>
+        <div class="device-info" id="deviceInfo"></div>
+        <a href="#" class="button" id="detectDeviceButton">ОПРЕДЕЛИТЬ УСТРОЙСТВО</a>
+        <a href="#" class="button" id="startButton">НАЧАТЬ</a>
+        <a href="main.html" class="return-button">ВЕРНУТЬСЯ</a> <!-- Кнопка "Вернуться" -->
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <p id="modalText"></p>
+            <p id="timeRemaining"></p> <!-- Новый элемент для отображения времени -->
+        </div>
+    </div>
+
+    <script>
+        let startButtonClicked = false;
+        let gameName = "";
+        const cooldownSeconds = 600; // Время в секундах для следующего запроса
+        let remainingTime = cooldownSeconds; // Оставшееся время
+
+        document.getElementById('detectDeviceButton').addEventListener('click', function() {
+            let deviceInfo = '';
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            if (/android/i.test(userAgent)) {
+                deviceInfo = 'Android';
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                deviceInfo = 'iOS';
+            } else if (/Mobi|Android/i.test(userAgent)) {
+                deviceInfo = 'Telephone';
+            } else if (/iPad|Android|Touch/i.test(userAgent)) {
+                deviceInfo = 'Планшет';
+            } else {
+                deviceInfo = 'DESKTOP';
+            }
+            
+            document.getElementById('deviceInfo').textContent = deviceInfo;
+        });
+
+        document.getElementById('startButton').addEventListener('click', function() {
+            if (startButtonClicked) {
+                // Открыть модальное окно с текстом, зависящим от игры
+                const modalText = document.getElementById('modalText');
+                modalText.innerHTML = `
+                    ВНИМАНИЕ!<br><br>
+                    НАША КОМАНДА ЗАБОТИТСЯ О<br>
+                    ТОЧНОСТИ ВЫДАННОЙ ВАМ<br>
+                    ИГРЫ, В РЕЖИМЕ ТЕСТА<br><br>
+                    Пожалуйста, подождите ${remainingTime} секунд.<br><br>
+                    С УВАЖЕНИЕМ, GORILLAS KAZIK!
+                `;
+                document.getElementById('myModal').style.display = 'block';
+                return;
+            }
+
+            startButtonClicked = true;
+            document.getElementById('loader').style.display = 'block'; // Показать loader
+            const circle = document.getElementById('circle');
+            // Показываем лоадер и скрываем круг
+            circle.style.opacity = '0';
+            document.getElementById('loader').style.display = 'block';
+
+            setTimeout(() => {
+                // Случайное изображение
+                document.getElementById('loader').style.display = 'none';
+                circle.style.opacity = '1';
+                const images = ['royalmines.png', 'mines.png'];
+                const randomImage = images[Math.floor(Math.random() * images.length)];
+                
+                // Устанавливаем фоновое изображение для круга
+                circle.style.backgroundImage = `url('${randomImage}')`;
+                circle.style.backgroundSize = 'cover';
+                circle.style.backgroundPosition = 'center';
+                
+                // Удаляем текст внутри круга
+                circle.textContent = '';
+                
+                // Скрываем знак вопроса
+                circle.style.setProperty('--before-content', 'none', 'important');
+
+                // Определяем имя игры на основе изображения
+                if (randomImage === 'mines.png') {
+                    gameName = 'MINES';
+                } else if (randomImage === 'royalmines.png') {
+                    gameName = 'RoyalMines';
+                }
+
+                document.getElementById('loader').style.display = 'none'; // Скрыть loader
+            }, 3000); // Задержка 3 секунды
+
+            // Включение блокировки на 600 секунд
+            document.getElementById('startButton').disabled = true; // Отключить кнопку
+            
+            // Обновление времени в модальном окне каждую секунду
+            const updateInterval = setInterval(() => {
+                remainingTime--;
+                document.getElementById('timeRemaining').textContent = `Следующий запрос можно отправить через ${remainingTime} секунд.`;
+
+                if (remainingTime <= 0) {
+                    clearInterval(updateInterval);
+                    document.getElementById('startButton').disabled = false; // Включить кнопку
+                    startButtonClicked = false; // Сбросить состояние клика
+                    remainingTime = cooldownSeconds; // Сбросить оставшееся время
+                }
+            }, 1000); // Обновление каждую секунду
+        });
+
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('myModal').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
