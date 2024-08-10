@@ -27,37 +27,34 @@
             margin: 0;
             font-family: 'HomeVideo', Arial, sans-serif;
             position: relative;
-            overflow: hidden; /* Добавлено для предотвращения прокрутки */
+            overflow-x: hidden; /* Чтобы избежать горизонтального скролла */
         }
 
         .banner, .bottom-banner {
             width: 90%;
             max-width: 385px;
-            height: auto;
             background: linear-gradient(135deg, #00b09b, rgb(123, 27, 202));
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding-left: 10px;
             border-radius: 15px;
-            box-sizing: border-box; /* Для корректного отображения размеров */
         }
 
         .banner {
             top: 10px;
+            height: 50px;
         }
 
         .bottom-banner {
             position: fixed;
-            bottom: 10px;
-            height: auto;
-            flex-direction: row;
+            bottom: 20px;
+            height: 70px;
+            border-radius: 40px;
             justify-content: center;
             gap: 10px;
-            border-radius: 40px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .banner img, .bottom-banner img {
@@ -68,9 +65,9 @@
         }
 
         .banner-text {
-            font-family: 'HomeVideo', Arial, sans-serif;
+            font-family: 'Intro', Arial, sans-serif;
             color: #ffffff;
-            font-size: 1.5rem;
+            font-size: 20px;
             white-space: nowrap;
         }
 
@@ -79,29 +76,18 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
-            width: 90%;
-            max-width: 385px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .images-container {
-            top: 80px;
-        }
-
-        .additional-images-container {
-            top: 250px;
+            margin-top: 70px;
         }
 
         .images-container div, .additional-images-container div {
             text-align: center;
             position: relative;
+            width: 160px;
         }
 
         .images-container img, .additional-images-container img {
-            width: 120px;
-            height: 120px;
+            width: 100%;
+            height: auto;
             border-radius: 20px;
             margin-bottom: 10px;
             box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
@@ -115,9 +101,8 @@
 
         .image-text-mines, .image-text-royalmines, .image-text-coinflip, .image-text-brawl {
             color: #ffffff;
-            font-size: 1rem;
+            font-size: 16px;
             margin-bottom: 10px;
-            padding-left: 20px;
         }
 
         .button, .button2 {
@@ -125,7 +110,7 @@
             background: linear-gradient(90deg, #00b09b, rgb(123, 27, 202));
             color: white;
             padding: 10px 20px;
-            font-size: 1rem;
+            font-size: 16px;
             border-radius: 25px;
             text-decoration: none;
             text-align: center;
@@ -149,7 +134,7 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            font-size: 1rem;
+            font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
@@ -159,7 +144,6 @@
         .nav-button img {
             width: 30px;
             height: 30px;
-            border-radius: 0;
             object-fit: cover;
         }
 
