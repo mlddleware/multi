@@ -146,7 +146,7 @@
             animation: spin 1s linear infinite;
             position: absolute;
             top: 50%;
-            left: 50%;
+            left: 35%;
             transform: translate(-50%, -50%);
             display: none;
         }
@@ -217,6 +217,7 @@
             cursor: pointer;
         }
     </style>
+    </style>
 </head>
 <body>
     <div class="banner">
@@ -233,7 +234,7 @@
         <div class="device-info" id="deviceInfo"></div>
         <a href="#" class="button" id="detectDeviceButton">ОПРЕДЕЛИТЬ УСТРОЙСТВО</a>
         <a href="#" class="button" id="startButton">НАЧАТЬ</a>
-        <a href="main.html" class="return-button">ВЕРНУТЬСЯ</a>
+        <a href="main.html" class="return-button">ВЕРНУТЬСЯ</a> <!-- Кнопка "Вернуться" -->
     </div>
 
     <!-- Модальное окно -->
@@ -241,15 +242,15 @@
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
             <p id="modalText"></p>
-            <p id="timeRemaining"></p>
+            <p id="timeRemaining"></p> <!-- Новый элемент для отображения времени -->
         </div>
     </div>
 
     <script>
         let startButtonClicked = false;
         let gameName = "";
-        const cooldownSeconds = 600;
-        let remainingTime = cooldownSeconds;
+        const cooldownSeconds = 600; // Время в секундах для следующего запроса
+        let remainingTime = cooldownSeconds; // Оставшееся время
 
         document.getElementById('detectDeviceButton').addEventListener('click', function() {
             let deviceInfo = '';
@@ -272,39 +273,75 @@
 
         document.getElementById('startButton').addEventListener('click', function() {
             if (startButtonClicked) {
+                // Открыть модальное окно с текстом, зависящим от игры
                 const modalText = document.getElementById('modalText');
-                const timeRemaining = document.getElementById('timeRemaining');
-
-                modalText.textContent = 'Вы уже начали игру.';
-                const interval = setInterval(() => {
-                    const minutes = Math.floor(remainingTime / 60);
-                    const seconds = remainingTime % 60;
-                    timeRemaining.textContent = `${minutes} минут ${seconds} секунд`;
-                    remainingTime--;
-
-                    if (remainingTime < 0) {
-                        clearInterval(interval);
-                        modalText.textContent = 'Время для новой игры';
-                        remainingTime = cooldownSeconds;
-                    }
-                }, 1000);
-
+                modalText.innerHTML = `
+                    ВНИМАНИЕ!<br><br>
+                    НАША КОМАНДА ЗАБОТИТСЯ О<br>
+                    ТОЧНОСТИ ВЫДАННОЙ ВАМ<br>
+                    ИГРЫ, В РЕЖИМЕ ТЕСТА<br><br>
+                    Пожалуйста, подождите ${remainingTime} секунд.<br><br>
+                    С УВАЖЕНИЕМ, GORILLAS KAZIK!
+                `;
                 document.getElementById('myModal').style.display = 'block';
-            } else {
-                startButtonClicked = true;
-                document.getElementById('circle').style.backgroundImage = "url('example.jpg')";
+                return;
             }
+
+            startButtonClicked = true;
+            document.getElementById('loader').style.display = 'block'; // Показать loader
+            const circle = document.getElementById('circle');
+            // Показываем лоадер и скрываем круг
+            circle.style.opacity = '0';
+            document.getElementById('loader').style.display = 'block';
+
+            setTimeout(() => {
+                // Случайное изображение
+                document.getElementById('loader').style.display = 'none';
+                circle.style.opacity = '1';
+                const images = ['royalmines.png', 'mines.png'];
+                const randomImage = images[Math.floor(Math.random() * images.length)];
+                
+                // Устанавливаем фоновое изображение для круга
+                circle.style.backgroundImage = `url('${randomImage}')`;
+                circle.style.backgroundSize = 'cover';
+                circle.style.backgroundPosition = 'center';
+                
+                // Удаляем текст внутри круга
+                circle.textContent = '';
+                
+                // Скрываем знак вопроса
+                circle.style.setProperty('--before-content', 'none', 'important');
+
+                // Определяем имя игры на основе изображения
+                if (randomImage === 'mines.png') {
+                    gameName = 'MINES';
+                } else if (randomImage === 'royalmines.png') {
+                    gameName = 'RoyalMines';
+                }
+
+                document.getElementById('loader').style.display = 'none'; // Скрыть loader
+            }, 3000); // Задержка 3 секунды
+
+            // Включение блокировки на 600 секунд
+            document.getElementById('startButton').disabled = true; // Отключить кнопку
+            
+            // Обновление времени в модальном окне каждую секунду
+            const updateInterval = setInterval(() => {
+                remainingTime--;
+                document.getElementById('timeRemaining').textContent = `Следующий запрос можно отправить через ${remainingTime} секунд.`;
+
+                if (remainingTime <= 0) {
+                    clearInterval(updateInterval);
+                    document.getElementById('startButton').disabled = false; // Включить кнопку
+                    startButtonClicked = false; // Сбросить состояние клика
+                    remainingTime = cooldownSeconds; // Сбросить оставшееся время
+                }
+            }, 1000); // Обновление каждую секунду
         });
 
         document.getElementById('closeModal').addEventListener('click', function() {
             document.getElementById('myModal').style.display = 'none';
         });
-
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('myModal')) {
-                document.getElementById('myModal').style.display = 'none';
-            }
-        };
     </script>
 </body>
 </html>
