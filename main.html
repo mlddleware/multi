@@ -21,121 +21,152 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #333333;
+            background: linear-gradient(135deg, #00b09b, rgb(123, 27, 202));
             background-size: cover;
             background-position: center center;
             margin: 0;
             font-family: 'HomeVideo', Arial, sans-serif;
-            position: relative; /* Добавляем relative для позиционирования элементов внутри */
+            position: relative;
         }
 
-        .banner {
+        .banner, .bottom-banner {
             width: 385px;
             height: 50px;
-            background-color: #2a2a2a;
+            background: linear-gradient(135deg, #00b09b, rgb(123, 27, 202));
             position: absolute;
-            top: 0;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            padding-left: 10px; /* Отступ слева */
-            border-radius: 15px; /* Закругленные углы */
+            padding-left: 10px;
+            border-radius: 15px;
         }
 
-        .banner img {
-            height: 40px; /* Высота изображения, чтобы оно поместилось в баннер */
+        .banner {
+            top: 0;
+        }
+
+        .bottom-banner {
+            position: fixed;
+            bottom: 180px;
+            height: 80px;
+            left: 50%;
+            border-radius: 40px;
+            transform: translateX(-50%);
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .banner img, .bottom-banner img {
+            height: 40px;
             width: auto;
-            border-radius: 50%; /* Закругление изображения */
-            margin-right: 10px; /* Отступ справа от изображения */
+            border-radius: 50%;
+            margin-right: 10px;
         }
 
         .banner-text {
             font-family: 'Intro', Arial, sans-serif;
-            color: #ffffff; /* Цвет текста */
-            font-size: 28px; /* Размер шрифта */
-            white-space: nowrap; /* Чтобы текст не переносился на новую строку */
+            color: #ffffff;
+            font-size: 28px;
+            white-space: nowrap;
         }
 
-        .images-container,
-        .additional-images-container {
+        .images-container, .additional-images-container {
             position: absolute;
             display: flex;
-            justify-content: center; /* Центрирование по горизонтали внутри контейнера */
-            gap: 30px; /* Отступ между элементами внутри контейнера */
+            justify-content: center;
+            gap: 30px;
         }
 
         .images-container {
-            top: 75px; /* Отступ от верхней границы */
+            top: 75px;
             left: 50%;
-            transform: translateX(-50%); /* Центрирование по горизонтали */
+            transform: translateX(-50%);
         }
 
         .additional-images-container {
-            top: 375px; /* Отступ от верхней границы для нового блока */
+            top: 375px;
             left: 50%;
-            transform: translateX(-50%); /* Центрирование по горизонтали */
+            transform: translateX(-50%);
         }
 
-        .images-container div,
-        .additional-images-container div {
-            text-align: center; /* Выравнивание текста по центру */
-            position: relative; /* Добавляем relative для позиционирования псевдоэлементов */
+        .images-container div, .additional-images-container div {
+            text-align: center;
+            position: relative;
         }
 
-        .images-container img,
-        .additional-images-container img {
-            width: 160px; /* Ширина изображений */
-            height: 160px; /* Высота изображений */
-            border-radius: 20px; /* Закругление углов для круглых изображений */
-            margin-bottom: 10px; /* Отступ снизу от изображения */
-            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7); /* Белое свечение */
-            transition: box-shadow 0.3s ease, transform 0.3s ease; /* Переходы для анимации */
+        .images-container img, .additional-images-container img {
+            width: 160px;
+            height: 160px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
 
-        .images-container img:hover,
-        .additional-images-container img:hover {
-            transform: scale(1.05); /* Увеличение изображения при наведении */
-            box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0.9); /* Увеличенное свечение при наведении */
+        .images-container img:hover, .additional-images-container img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0.9);
         }
 
-        .image-text-mines,
-        .image-text-royalmines,
-        .image-text-coinflip,
-        .image-text-brawl {
-            color: #ffffff; /* Цвет текста */
-            font-size: 20px; /* Размер шрифта для текста */
-            margin-bottom: 10px; /* Отступ снизу от текста */
-            padding-left: 20px; /* Добавляем отступ слева для сдвига текста правее */
+        .image-text-mines, .image-text-royalmines, .image-text-coinflip, .image-text-brawl {
+            color: #ffffff;
+            font-size: 20px;
+            margin-bottom: 10px;
+            padding-left: 20px;
         }
 
-        .button {
+        .button, .button2 {
             display: inline-block;
-            background: linear-gradient(90deg, #00b09b, rgb(123, 27, 202)); /* Градиент зеленого цвета */
+            background: linear-gradient(90deg, #00b09b, rgb(123, 27, 202));
             color: white;
             padding: 10px 20px;
             font-size: 18px;
-            border-radius: 25px; /* Закругленные углы кнопки */
+            border-radius: 25px;
             text-decoration: none;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Анимация для трансформации и тени */
-            cursor: pointer; /* Курсор в виде указателя для кнопки */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
 
         .button2 {
-            display: inline-block;
-            background: linear-gradient(90deg, #00b09b, rgb(123, 27, 202)); /* Градиент зеленого цвета */
-            color: white;
-            padding: 10px 20px;
-            font-size: 18px;
-            border-radius: 25px; /* Закругленные углы кнопки */
-            text-decoration: none;
-            text-align: center;
+            background: linear-gradient(90deg, #00b09b, rgb(123, 27, 202));
         }
 
-        .button:hover {
-            transform: scale(1.1); /* Увеличение кнопки при наведении */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Тень при наведении */
+        .button:hover, .button2:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 100px;
+            height: 70px;
+            border-radius: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button img {
+            width: 50px;
+            height: 50px;
+            border-radius: 0;
+            object-fit: cover;
+        }
+
+        .nav-button.active {
+            background-color: rgba(147, 159, 185, 0.9); /* Непрозрачный фон для активной кнопки */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Тень для активной кнопки */
+        }
+
+        .nav-button:hover {
+            background-color: rgba(190, 190, 190, 0.5); /* Полупрозрачный фон при наведении */
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -171,14 +202,47 @@
         </div>
     </div>
 
+    <div class="bottom-banner">
+        <button class="nav-button" id="tgButton" onclick="setActiveButton('tg')">
+            <img src="tg.png" alt="Telegram">
+        </button>
+        <button class="nav-button active" id="gamepadButton" onclick="setActiveButton('gamepad')">
+            <img src="gamepad.png" alt="Gamepad">
+        </button>
+        <button class="nav-button" id="grafikButton" onclick="setActiveButton('grafik')">
+            <img src="grafik.png" alt="Grafik">
+        </button>
+    </div>
+
     <script>
+        function setActiveButton(buttonId) {
+            // Убираем активный класс у всех кнопок
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            // Устанавливаем активный класс только для выбранной кнопки
+            document.getElementById(buttonId + 'Button').classList.add('active');
+        }
+    
         document.getElementById('minesButton').addEventListener('click', function() {
             window.location.href = 'mines.html';
         });
-
+    
         document.getElementById('royalButton').addEventListener('click', function() {
             window.location.href = 'royal.html';
         });
+    
+        document.getElementById('grafikButton').addEventListener('click', function() {
+            window.location.href = 'grafik.html';
+        });
+    
+        function goToPage(direction) {
+            if (direction === 'prev') {
+                console.log('Переход на предыдущую страницу');
+            } else if (direction === 'next') {
+                console.log('Переход на следующую страницу');
+            }
+        }
     </script>
 </body>
 </html>
