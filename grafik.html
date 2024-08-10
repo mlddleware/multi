@@ -25,13 +25,15 @@
             margin: 0;
             font-family: 'HomeVideo', Arial, sans-serif;
             position: relative;
+            overflow-y: auto; /* Добавлено для прокрутки */
         }
 
         .banner {
-            width: 385px;
+            width: 80%;
+            max-width: 385px;
             height: 50px;
             background: linear-gradient(135deg, #2a2a2a, #1c1c1c);
-            position: absolute;
+            position: fixed;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -39,6 +41,7 @@
             padding-left: 10px;
             border-radius: 15px;
             top: 0;
+            z-index: 1000;
         }
 
         .banner img {
@@ -51,7 +54,7 @@
         .banner-text {
             font-family: 'Rostov', Arial, sans-serif;
             color: #ffffff;
-            font-size: 25px;
+            font-size: 20px;
             white-space: nowrap;
             margin-left: 35px;
         }
@@ -61,24 +64,25 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: calc(100vh - 50px); /* Учитываем высоту баннера */
             padding: 20px;
-            margin-top: -300px; /* Удален отступ сверху */
-            position: relative;
+            margin-top: 60px; /* Отступ сверху для учета высоты баннера */
         }
 
         .title {
             font-family: 'HomeVideo', Arial, sans-serif;
             color: #ffffff;
-            font-size: 36px;
-            margin-bottom: 10px; /* Уменьшен отступ снизу */
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
         }
 
         .circle-container {
             position: relative;
-            width: 250px;
+            width: 100%;
+            max-width: 250px;
             height: 175px;
-            margin-bottom: 10px; /* Уменьшен отступ между кругом и текстом */
+            margin-bottom: 10px;
         }
 
         .circle {
@@ -93,19 +97,19 @@
             background-position: center;
             transition: opacity 0.3s ease;
             position: relative;
-            --before-content: '?'; /* CSS переменная для управления содержимым */
+            --before-content: '?';
         }
 
         .circle::before {
             content: var(--before-content);
             font-family: 'HomeVideo', Arial, sans-serif;
             color: #ffffff;
-            font-size: 80px;
+            font-size: 40px;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            transition: opacity 0.3s ease; /* Добавьте переход для плавного скрытия */
+            transition: opacity 0.3s ease;
         }
 
         .button {
@@ -113,13 +117,13 @@
             background: linear-gradient(90deg, #00b09b, #7b1bca);
             color: white;
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 16px;
             border-radius: 25px;
             text-decoration: none;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            margin: 10px; /* Добавлен отступ для кнопок */
+            margin: 10px;
         }
 
         .button:hover {
@@ -131,7 +135,7 @@
             font-family: 'HomeVideo', Arial, sans-serif;
             color: #ffffff;
             font-size: 15px;
-            margin: 10px 0; /* Уменьшен отступ между текстом и кнопкой */
+            margin: 10px 0;
         }
 
         .loader {
@@ -142,10 +146,10 @@
             height: 60px;
             animation: spin 1s linear infinite;
             position: absolute;
-            top: 40%;
-            left: 35%;
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            display: none; /* Скрыто по умолчанию */
+            display: none;
         }
 
         @keyframes spin {
@@ -157,11 +161,10 @@
             display: none;
         }
 
-        /* Модальное окно */
         .modal {
-            display: none; /* Скрыто по умолчанию */
+            display: none;
             position: fixed;
-            z-index: 1;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
@@ -177,6 +180,7 @@
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
+            max-width: 600px;
             text-align: center;
             font-family: 'HomeVideo', Arial, sans-serif;
         }
@@ -186,13 +190,13 @@
             background: linear-gradient(90deg, #ff4b2b, #ff416c);
             color: white;
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 16px;
             border-radius: 25px;
             text-decoration: none;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            margin: 10px; /* Добавлен отступ для кнопок */
+            margin: 10px;
         }
 
         .return-button:hover {
@@ -213,6 +217,36 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        /* Медиазапросы для адаптивности */
+        @media (max-width: 600px) {
+            .banner-text {
+                font-size: 16px;
+            }
+
+            .title {
+                font-size: 20px;
+            }
+
+            .circle-container {
+                width: 100%;
+                max-width: 200px;
+                height: 150px;
+            }
+
+            .circle::before {
+                font-size: 30px;
+            }
+
+            .button, .return-button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+
+            .device-info {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -230,7 +264,7 @@
         <div class="device-info" id="deviceInfo"></div>
         <a href="#" class="button" id="detectDeviceButton">ОПРЕДЕЛИТЬ УСТРОЙСТВО</a>
         <a href="#" class="button" id="startButton">НАЧАТЬ</a>
-        <a href="main.html" class="return-button">ВЕРНУТЬСЯ</a> <!-- Кнопка "Вернуться" -->
+        <a href="main.html" class="return-button">ВЕРНУТЬСЯ</a>
     </div>
 
     <!-- Модальное окно -->
@@ -238,7 +272,7 @@
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
             <p id="modalText"></p>
-            <p id="timeRemaining"></p> <!-- Новый элемент для отображения времени -->
+            <p id="timeRemaining"></p>
         </div>
     </div>
 
@@ -256,88 +290,77 @@
                 deviceInfo = 'Android';
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 deviceInfo = 'iOS';
-            } else if (/Mobi|Android/i.test(userAgent)) {
-                deviceInfo = 'Telephone';
-            } else if (/iPad|Android|Touch/i.test(userAgent)) {
-                deviceInfo = 'Планшет';
+            } else if (/Windows NT/i.test(userAgent)) {
+                deviceInfo = 'Windows';
+            } else if (/Macintosh|Mac OS X/i.test(userAgent)) {
+                deviceInfo = 'macOS';
+            } else if (/Linux/i.test(userAgent)) {
+                deviceInfo = 'Linux';
             } else {
-                deviceInfo = 'DESKTOP';
+                deviceInfo = 'Unknown';
             }
-            
-            document.getElementById('deviceInfo').textContent = deviceInfo;
+            document.getElementById('deviceInfo').innerText = 'Устройство: ' + deviceInfo;
         });
 
         document.getElementById('startButton').addEventListener('click', function() {
             if (startButtonClicked) {
-                // Открыть модальное окно с текстом, зависящим от игры
-                const modalText = document.getElementById('modalText');
-                modalText.innerHTML = `
-                    ВНИМАНИЕ!<br><br>
-                    НАША КОМАНДА ЗАБОТИТСЯ О<br>
-                    ТОЧНОСТИ ВЫДАННОЙ ВАМ<br>
-                    ИГРЫ, В РЕЖИМЕ ТЕСТА<br><br>
-                    Пожалуйста, подождите ${remainingTime} секунд.<br><br>
-                    С УВАЖЕНИЕМ, GORILLAS KAZIK!
-                `;
-                document.getElementById('myModal').style.display = 'block';
+                showCooldownMessage();
                 return;
             }
-
             startButtonClicked = true;
-            document.getElementById('loader').style.display = 'block'; // Показать loader
-            const circle = document.getElementById('circle');
-            // Показываем лоадер и скрываем круг
-            circle.style.opacity = '0';
+            document.getElementById('circle').style.backgroundImage = "url('start.png')";
             document.getElementById('loader').style.display = 'block';
+            document.getElementById('circle').style.opacity = 0.5;
+            document.getElementById('deviceInfo').innerText = 'Подождите...';
 
-            setTimeout(() => {
-                // Случайное изображение
+            setTimeout(function() {
                 document.getElementById('loader').style.display = 'none';
-                circle.style.opacity = '1';
-                const images = ['royalmines.png', 'mines.png'];
-                const randomImage = images[Math.floor(Math.random() * images.length)];
-                
-                // Устанавливаем фоновое изображение для круга
-                circle.style.backgroundImage = `url('${randomImage}')`;
-                circle.style.backgroundSize = 'cover';
-                circle.style.backgroundPosition = 'center';
-                
-                // Удаляем текст внутри круга
-                circle.textContent = '';
-                
-                // Скрываем знак вопроса
-                circle.style.setProperty('--before-content', 'none', 'important');
-
-                // Определяем имя игры на основе изображения
-                if (randomImage === 'mines.png') {
-                    gameName = 'MINES';
-                } else if (randomImage === 'royalmines.png') {
-                    gameName = 'RoyalMines';
-                }
-
-                document.getElementById('loader').style.display = 'none'; // Скрыть loader
-            }, 3000); // Задержка 3 секунды
-
-            // Включение блокировки на 600 секунд
-            document.getElementById('startButton').disabled = true; // Отключить кнопку
-            
-            // Обновление времени в модальном окне каждую секунду
-            const updateInterval = setInterval(() => {
-                remainingTime--;
-                document.getElementById('timeRemaining').textContent = `Следующий запрос можно отправить через ${remainingTime} секунд.`;
-
-                if (remainingTime <= 0) {
-                    clearInterval(updateInterval);
-                    document.getElementById('startButton').disabled = false; // Включить кнопку
-                    startButtonClicked = false; // Сбросить состояние клика
-                    remainingTime = cooldownSeconds; // Сбросить оставшееся время
-                }
-            }, 1000); // Обновление каждую секунду
+                document.getElementById('circle').style.opacity = 1;
+                document.getElementById('deviceInfo').innerText = 'Готово!';
+                startButtonClicked = false;
+                gameName = 'Your Game Name'; // Замените на имя вашей игры
+                document.getElementById('circle').style.backgroundImage = "url('stop.png')";
+                document.getElementById('circle').setAttribute('data-game-name', gameName);
+            }, 3000); // Замените на нужное время
         });
 
+        function showCooldownMessage() {
+            const modal = document.getElementById('myModal');
+            const timeRemainingElem = document.getElementById('timeRemaining');
+            const modalText = document.getElementById('modalText');
+            modalText.innerText = `Пожалуйста, подождите перед следующим запуском.`;
+            timeRemainingElem.innerText = `Осталось времени: ${formatTime(remainingTime)}`;
+            modal.style.display = 'block';
+
+            // Обновляем таймер каждую секунду
+            const timer = setInterval(function() {
+                remainingTime--;
+                timeRemainingElem.innerText = `Осталось времени: ${formatTime(remainingTime)}`;
+                if (remainingTime <= 0) {
+                    clearInterval(timer);
+                    modal.style.display = 'none';
+                    remainingTime = cooldownSeconds; // Сброс таймера
+                }
+            }, 1000);
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${minutes} мин ${secs} сек`;
+        }
+
+        // Закрытие модального окна
         document.getElementById('closeModal').addEventListener('click', function() {
             document.getElementById('myModal').style.display = 'none';
         });
+
+        // Закрытие модального окна при клике вне его области
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('myModal')) {
+                document.getElementById('myModal').style.display = 'none';
+            }
+        };
     </script>
 </body>
 </html>
