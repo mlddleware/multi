@@ -25,38 +25,37 @@
             margin: 0;
             font-family: 'HomeVideo', Arial, sans-serif;
             position: relative;
-            overflow-y: auto; /* Добавлено для прокрутки */
+            overflow: hidden; /* Убирает горизонтальную прокрутку */
         }
 
         .banner {
             width: 90%;
-            max-width: 500px;
-            height: 70px;
+            max-width: 385px;
+            height: 50px;
             background: linear-gradient(135deg, #2a2a2a, #1c1c1c);
-            position: fixed;
+            position: absolute;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            padding-left: 15px;
-            border-radius: 20px;
+            padding-left: 10px;
+            border-radius: 15px;
             top: 0;
-            z-index: 1000;
         }
 
         .banner img {
-            height: 60px;
+            height: 40px;
             width: auto;
             border-radius: 50%;
-            margin-right: 15px;
+            margin-right: 10px;
         }
 
         .banner-text {
             font-family: 'Rostov', Arial, sans-serif;
             color: #ffffff;
-            font-size: 24px;
+            font-size: 20px;
             white-space: nowrap;
-            margin-left: 40px;
+            margin-left: 15px;
         }
 
         .content {
@@ -64,25 +63,25 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: calc(100vh - 70px); /* Учитываем высоту баннера */
-            padding: 30px;
-            margin-top: 80px; /* Отступ сверху для учета высоты баннера */
+            height: calc(100vh - 60px); /* Учитывает высоту баннера */
+            padding: 10px;
+            margin-top: 60px; /* Убирает отрицательный отступ */
+            box-sizing: border-box;
         }
 
         .title {
             font-family: 'HomeVideo', Arial, sans-serif;
             color: #ffffff;
-            font-size: 32px;
-            margin-bottom: 15px;
-            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
         .circle-container {
             position: relative;
-            width: 100%;
-            max-width: 300px;
-            height: 225px;
-            margin-bottom: 15px;
+            width: 70%;
+            max-width: 250px;
+            height: 175px;
+            margin-bottom: 10px;
         }
 
         .circle {
@@ -92,7 +91,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.7);
             background-size: cover;
             background-position: center;
             transition: opacity 0.3s ease;
@@ -116,34 +115,34 @@
             display: inline-block;
             background: linear-gradient(90deg, #00b09b, #7b1bca);
             color: white;
-            padding: 15px 30px;
-            font-size: 20px;
-            border-radius: 30px;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 25px;
             text-decoration: none;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            margin: 15px;
+            margin: 5px;
         }
 
         .button:hover {
             transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .device-info {
             font-family: 'HomeVideo', Arial, sans-serif;
             color: #ffffff;
-            font-size: 20px;
-            margin: 15px 0;
+            font-size: 14px;
+            margin: 10px 0;
         }
 
         .loader {
-            border: 10px solid #f3f3f3;
+            border: 8px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 10px solid #1bca50;
-            width: 80px;
-            height: 80px;
+            border-top: 8px solid #1bca50;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
             position: absolute;
             top: 50%;
@@ -164,23 +163,23 @@
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 1;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
             background: rgba(0,0,0,0.4);
-            padding-top: 60px;
+            padding-top: 20px; /* Уменьшен отступ сверху */
         }
 
         .modal-content {
             background: linear-gradient(135deg, #fefefe, #e0e0e0);
             margin: 5% auto;
-            padding: 30px;
+            padding: 15px;
             border: 1px solid #888;
-            width: 80%;
-            max-width: 800px;
+            width: 90%;
+            max-width: 500px;
             text-align: center;
             font-family: 'HomeVideo', Arial, sans-serif;
         }
@@ -189,25 +188,25 @@
             display: inline-block;
             background: linear-gradient(90deg, #ff4b2b, #ff416c);
             color: white;
-            padding: 15px 30px;
-            font-size: 20px;
-            border-radius: 30px;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 25px;
             text-decoration: none;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            margin: 15px;
+            margin: 5px;
         }
 
         .return-button:hover {
             transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .close {
             color: #aaa;
             float: right;
-            font-size: 32px;
+            font-size: 24px;
             font-weight: bold;
         }
 
@@ -216,36 +215,6 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
-        }
-
-        /* Медиазапросы для адаптивности */
-        @media (max-width: 600px) {
-            .banner-text {
-                font-size: 18px;
-            }
-
-            .title {
-                font-size: 24px;
-            }
-
-            .circle-container {
-                width: 100%;
-                max-width: 250px;
-                height: 200px;
-            }
-
-            .circle::before {
-                font-size: 40px;
-            }
-
-            .button, .return-button {
-                font-size: 16px;
-                padding: 12px 24px;
-            }
-
-            .device-info {
-                font-size: 16px;
-            }
         }
     </style>
 </head>
@@ -279,46 +248,51 @@
     <script>
         let startButtonClicked = false;
         let gameName = "";
-        const cooldownSeconds = 600; // Время в секундах для следующего запроса
-        let remainingTime = cooldownSeconds; // Оставшееся время
+        const cooldownSeconds = 600;
+        let remainingTime = cooldownSeconds;
 
         document.getElementById('detectDeviceButton').addEventListener('click', function() {
             let deviceInfo = '';
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
             
             if (/android/i.test(userAgent)) {
-                deviceInfo = 'Android Device';
+                deviceInfo = 'Android';
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                deviceInfo = 'iOS Device';
-            } else if (/windows phone/i.test(userAgent)) {
-                deviceInfo = 'Windows Phone Device';
+                deviceInfo = 'iOS';
+            } else if (/Mobi|Android/i.test(userAgent)) {
+                deviceInfo = 'Telephone';
+            } else if (/iPad|Android|Touch/i.test(userAgent)) {
+                deviceInfo = 'Планшет';
             } else {
-                deviceInfo = 'Unknown Device';
+                deviceInfo = 'DESKTOP';
             }
             
-            document.getElementById('deviceInfo').innerText = 'Вы используете: ' + deviceInfo;
+            document.getElementById('deviceInfo').textContent = deviceInfo;
         });
 
         document.getElementById('startButton').addEventListener('click', function() {
-            if (!startButtonClicked) {
-                startButtonClicked = true;
-                const circle = document.getElementById('circle');
-                const loader = document.getElementById('loader');
+            if (startButtonClicked) {
+                const modalText = document.getElementById('modalText');
+                const timeRemaining = document.getElementById('timeRemaining');
 
-                loader.style.display = 'block';
-                circle.style.opacity = '0.2';
+                modalText.textContent = 'Вы уже начали игру.';
+                const interval = setInterval(() => {
+                    const minutes = Math.floor(remainingTime / 60);
+                    const seconds = remainingTime % 60;
+                    timeRemaining.textContent = `${minutes} минут ${seconds} секунд`;
+                    remainingTime--;
 
-                setTimeout(function() {
-                    loader.style.display = 'none';
-                    circle.style.opacity = '1';
-                    document.getElementById('modalText').innerText = 'Определение завершено. Игра: ' + gameName;
-                    document.getElementById('myModal').style.display = 'block';
-                    remainingTime = cooldownSeconds;
-                    updateRemainingTime();
-                }, 2000); // Задержка имитации загрузки
-            } else {
-                document.getElementById('modalText').innerText = 'Вы уже выбрали игру.';
+                    if (remainingTime < 0) {
+                        clearInterval(interval);
+                        modalText.textContent = 'Время для новой игры';
+                        remainingTime = cooldownSeconds;
+                    }
+                }, 1000);
+
                 document.getElementById('myModal').style.display = 'block';
+            } else {
+                startButtonClicked = true;
+                document.getElementById('circle').style.backgroundImage = "url('example.jpg')";
             }
         });
 
@@ -326,19 +300,11 @@
             document.getElementById('myModal').style.display = 'none';
         });
 
-        function updateRemainingTime() {
-            const timeRemainingElement = document.getElementById('timeRemaining');
-            const minutes = Math.floor(remainingTime / 60);
-            const seconds = remainingTime % 60;
-            timeRemainingElement.innerText = `Оставшееся время до следующего выбора: ${minutes} мин ${seconds} сек`;
-
-            if (remainingTime <= 0) {
-                timeRemainingElement.innerText = 'Вы можете выбрать игру снова.';
-            } else {
-                remainingTime--;
-                setTimeout(updateRemainingTime, 1000); // Обновляем каждую секунду
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('myModal')) {
+                document.getElementById('myModal').style.display = 'none';
             }
-        }
+        };
     </script>
 </body>
 </html>
