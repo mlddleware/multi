@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device=300, height=device=400, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Веб приложение для Телеграм бота</title>
     <style>
         @font-face {
@@ -26,18 +26,18 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #333333;
-            background-size: cover;
-            background-position: center center;
             margin: 0;
             font-family: 'HomeVideo', Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background-size: cover;
+            background-position: center center;
             position: relative;
         }
 
         .banner {
             width: 360px;
             height: 50px;
-            background-color: #2a2a2a;
+            background: rgba(42, 42, 42, 0.8);
             position: absolute;
             top: 0;
             left: 50%;
@@ -46,6 +46,7 @@
             align-items: center;
             padding-left: 10px;
             border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         .banner img {
@@ -64,8 +65,6 @@
 
         .window, .window-finished {
             width: 300px;
-            position: absolute;
-            top: 75px;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             border-radius: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -76,6 +75,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             padding: 20px;
             box-sizing: border-box;
+            color: white;
         }
 
         .window:hover, .window-finished:hover {
@@ -84,16 +84,13 @@
         }
 
         .window-text, .finished-text {
-            color: white;
             font-size: 24px;
             text-align: center;
             margin-bottom: 20px;
         }
 
         .instructions {
-            color: white;
             font-size: 13px;
-            font-family: 'Arial', Arial, sans-serif;
             margin-bottom: 20px;
             text-align: center;
         }
@@ -133,13 +130,14 @@
             transform: translate(-50%, -50%);
             width: 300px;
             height: 100px;
-            background-color: #fff;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             padding: 20px;
             text-align: center;
             font-family: 'Rostov', Arial, sans-serif;
+            color: white;
         }
 
         .modal p {
@@ -181,7 +179,6 @@
         }
 
         .input-label {
-            color: white;
             font-size: 16px;
             margin-bottom: 10px;
         }
@@ -189,15 +186,15 @@
 </head>
 <body>
     <div class="banner">
-        <img src="avatar.jpg" alt="Avatar">
+        <img src="ava.jpg" alt="Avatar">
         <div class="banner-text">GORILLAS KAZIK</div>
     </div>
     <div class="window" id="window">
         <div class="window-text">Регистрация</div>
         <div class="instructions">
-            <p>1. Для начала зарегистрируйтесь по ссылке скопировав её нажав на кнопку снизу.</p>
-            <p>2. После успешной регистрации скопируйте ваш айди на сайте (Вкладка 'пополнение' и в правом верхнем углу будет ваш ID).</p>
-            <p>3. Затем нажмите на кнопку 'Продолжить', и введите ваш айди.</p>
+            <p>1. Для начала зарегистрируйтесь по ссылке, скопировав её, нажав на кнопку снизу.</p>
+            <p>2. После успешной регистрации скопируйте ваш айди на сайте (вкладка 'Пополнение' и в правом верхнем углу будет ваш ID).</p>
+            <p>3. Затем нажмите на кнопку 'Продолжить' и введите ваш айди.</p>
         </div>
         <div class="button-container">
             <button class="register-button" onclick="copyLink()">Скопировать ссылку</button>
@@ -235,15 +232,14 @@
         }
 
         function confirmID() {
-    const userID = document.getElementById('user-id').value;
-    if (userID.match(/^\d{1,9}$/)) {
-        // ID подтвержден, перенаправление на main.html
-        window.location.href = 'main.html';
-    } else {
-        alert('Пожалуйста, введите корректный ID (от 1 до 9 цифр).');
-    }
-}
-
+            const userID = document.getElementById('user-id').value;
+            if (userID.match(/^\d{1,9}$/)) {
+                // ID подтвержден, перенаправление на main.html
+                window.location.href = 'main.html';
+            } else {
+                alert('Пожалуйста, введите корректный ID (от 1 до 9 цифр).');
+            }
+        }
     </script>
 </body>
 </html>
