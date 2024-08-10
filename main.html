@@ -27,7 +27,7 @@
             margin: 0;
             font-family: 'HomeVideo', Arial, sans-serif;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Добавлено для предотвращения прокрутки */
         }
 
         .banner, .bottom-banner {
@@ -42,13 +42,11 @@
             align-items: center;
             padding: 10px;
             border-radius: 15px;
+            box-sizing: border-box; /* Для корректного отображения размеров */
         }
 
         .banner {
             top: 10px;
-            height: auto;
-            padding: 10px;
-            flex-direction: row;
         }
 
         .bottom-banner {
@@ -56,8 +54,10 @@
             bottom: 10px;
             height: auto;
             flex-direction: row;
-            gap: 10px;
             justify-content: center;
+            gap: 10px;
+            border-radius: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .banner img, .bottom-banner img {
@@ -68,32 +68,42 @@
         }
 
         .banner-text {
-            font-family: 'Intro', Arial, sans-serif;
+            font-family: 'HomeVideo', Arial, sans-serif;
             color: #ffffff;
-            font-size: 24px;
+            font-size: 1.5rem;
             white-space: nowrap;
-            text-align: center;
         }
 
         .images-container, .additional-images-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
-            padding: 10px;
-            margin-top: 70px;
+            gap: 20px;
+            width: 90%;
+            max-width: 385px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .images-container {
+            top: 80px;
+        }
+
+        .additional-images-container {
+            top: 250px;
         }
 
         .images-container div, .additional-images-container div {
             text-align: center;
-            flex: 1;
-            max-width: 160px;
+            position: relative;
         }
 
         .images-container img, .additional-images-container img {
-            width: 100%;
-            height: auto;
+            width: 120px;
+            height: 120px;
             border-radius: 20px;
+            margin-bottom: 10px;
             box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
             transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
@@ -105,8 +115,9 @@
 
         .image-text-mines, .image-text-royalmines, .image-text-coinflip, .image-text-brawl {
             color: #ffffff;
-            font-size: 16px;
-            margin-top: 10px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            padding-left: 20px;
         }
 
         .button, .button2 {
@@ -114,7 +125,7 @@
             background: linear-gradient(90deg, #00b09b, rgb(123, 27, 202));
             color: white;
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 1rem;
             border-radius: 25px;
             text-decoration: none;
             text-align: center;
@@ -138,7 +149,7 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            font-size: 16px;
+            font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
@@ -148,6 +159,7 @@
         .nav-button img {
             width: 30px;
             height: 30px;
+            border-radius: 0;
             object-fit: cover;
         }
 
@@ -208,11 +220,9 @@
 
     <script>
         function setActiveButton(buttonId) {
-            // Убираем активный класс у всех кнопок
             document.querySelectorAll('.nav-button').forEach(button => {
                 button.classList.remove('active');
             });
-            // Устанавливаем активный класс только для выбранной кнопки
             document.getElementById(buttonId + 'Button').classList.add('active');
         }
     
