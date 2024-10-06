@@ -7,7 +7,7 @@
     <style>
         @font-face {
             font-family: 'HomeVideo';
-            src: url('HomeVideo-Regular.otf') format('opentype');
+            src: url('Intro.otf') format('opentype');
         }
 
         body {
@@ -26,9 +26,9 @@
         .main-square {
             width: 220px;
             height: 220px;
-            background-color: #0A101E;
+            background-color: #212121; /* Обновленный цвет фона квадрата */
             border-radius: 15px;
-            box-shadow: 0 0 10px 5px #2840ca;
+            box-shadow: 0 0 10px 5px #F07427; /* Обновленный цвет тени */
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             grid-template-rows: repeat(5, 1fr);
@@ -41,7 +41,7 @@
         .inner-square {
             width: 100%;
             height: 100%;
-            background-color: #238FA9;
+            background-color: #F07427; /* Обновленный цвет квадрата */
             border-radius: 5px;
         }
         .star {
@@ -87,7 +87,7 @@
             padding: 5px 20px;
             font-size: 16px;
             font-family: 'HomeVideo', Arial, sans-serif; /* Применяем шрифт HomeVideo */
-            background-color: #238FA9;
+            background-color: #F07427; /* Обновленный цвет кнопки */
             color: white;
             border: none;
             border-radius: 5px;
@@ -115,7 +115,7 @@
 </head>
 <body>
     <div>
-        <h1 style="font-size: 24px; margin-bottom: 20px;">GORILLAS KAZIK</h1>
+        <h1 style="font-size: 24px; color:#F07427; margin-bottom: 20px;">ИИ-ПРЕДСКАЗАТЕЛЬ</h1> <!-- Обновленный цвет заголовка -->
     </div>
 
     <div class="main-square" id="mainSquare">
@@ -230,15 +230,13 @@
         function getRandomIndices(max, count) {
             const indices = [];
             while (indices.length < count) {
-                const randomIndex = Math.floor(Math.random() * max);
-                if (!indices.includes(randomIndex)) {
-                    indices.push(randomIndex);
+                const rand = Math.floor(Math.random() * max);
+                if (!indices.includes(rand)) {
+                    indices.push(rand);
                 }
             }
             return indices;
         }
-
-        document.getElementById('trapSlider').addEventListener('input', updateTrapCount);
     </script>
 </body>
 </html>
